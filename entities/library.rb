@@ -2,7 +2,6 @@ require_relative '../requires'
 
 class Library
   attr_reader :authors, :readers, :orders, :books
-  PATH = './database/import.yml'.freeze
 
   def initialize
     @authors = []
@@ -28,14 +27,6 @@ class Library
     raise EntityError, "#{reader.class} is not class Reader" unless reader.is_a? Reader
 
     @orders.push(Order.new(book, reader))
-  end
-
-  def save_data
-    Data.save(PATH, @authors, @readers, @orders)
-  end
-
-  def load_data
-    Data.load(PATH)
   end
 
   def top_readers(quantity = 1)

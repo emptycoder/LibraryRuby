@@ -3,6 +3,8 @@
 require_relative 'entities/library.rb'
 require 'faker'
 
+PATH = './database/import.yml'
+
 library = Library.new
 
 10.times do
@@ -21,19 +23,12 @@ library = Library.new
     book = Book.new(title: Faker::Book.title,
                     author: author)
     library.add(book)
+    library.add_order(book, reader) if Faker::Number.between(1, 100) < 30
   end
 end
 
-library.readers.each do |reader|
-  library.authors.each do |books|
-    library.books.each do |book|
-      library.add_order(book, reader) if Faker::Number.between(1, 100) < 30
-    end
-  end
-end
-
-library.save_data
-library.load_data
+Data.save(PATH, library)
+library = Data.load(PATH)
 puts 'Top readers:'
 puts library.top_readers.to_s
 puts 'Top books:'
