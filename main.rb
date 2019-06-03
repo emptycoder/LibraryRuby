@@ -25,8 +25,8 @@ library = Library.new
 end
 
 library.readers.each do |reader|
-  library.authors.each_value do |books|
-    books.each do |book|
+  library.authors.each do |books|
+    library.books.each do |book|
       library.add_order(book, reader) if Faker::Number.between(1, 100) < 30
     end
   end

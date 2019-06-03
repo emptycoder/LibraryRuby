@@ -1,11 +1,12 @@
 require_relative '../requires'
 
 class Library
-  attr_reader :authors, :readers, :orders
+  attr_reader :authors, :readers, :orders, :books
   PATH = './database/import.yml'.freeze
 
   def initialize
-    @authors = {}
+    @authors = []
+    @books = []
     @readers = []
     @orders = []
   end
@@ -13,9 +14,9 @@ class Library
   def add(entity)
     case entity
     when Book
-      @authors[entity.author] << entity
+      @books.push(entity)
     when Author
-      @authors[entity] = [] unless @authors.include?(entity)
+      @authors.push(entity)
     when Reader
       @readers.push(entity)
     else raise EntityError
