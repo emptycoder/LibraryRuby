@@ -1,10 +1,8 @@
 require_relative '../utils/check'
-# frozen_string_literal: true
 
-# Class that describes author object
 class Author
   attr_reader :name, :bio
-  include Check
+  include Errors
 
   def initialize(name, bio)
     empty?(name)

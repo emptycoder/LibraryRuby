@@ -4,13 +4,13 @@ require_relative '../utils/check'
 # Class that describes reader object
 class Reader
   attr_reader :name, :email, :city, :street, :house
-  include Check
+  include Errors
 
   def initialize(name, email, city, street, house)
     empty?(name, email, city, street)
     string?(name, email, city, street)
-    positive?(house)
     integer?(house)
+    positive?(house)
 
     @name = name
     @email = email
