@@ -2,31 +2,24 @@ require_relative '../requires'
 
 class Library
   attr_reader :authors, :readers, :orders
-  attr_writer :PATH
+  PATH = './database/import.yml'.freeze
 
   def initialize
     @authors = {}
     @readers = []
     @orders = []
-    @PATH = './import.yml'
   end
 
-  def add_book(book)
-    raise EntityError, "#{book.class} isn't book!" unless book.is_a? Book
-
-    @authors[book.author] << book
-  end
-
-  def add_author(author)
-    raise EntityError, "#{author.class} isn't author!" unless author.is_a? Author
-
-    @authors[author] = [] unless @authors.include?(author)
-  end
-
-  def add_reader(reader)
-    raise EntityError, "#{reader.class} isn't reader!" unless reader.is_a? Reader
-
-    @readers.push(reader)
+  def add(entity)
+    case entity
+    when Book
+      @authors[entity.author] << entity
+    when Author
+      @authors[entity] = [] unless @authors.include?(entity)
+    when Reader
+      @readers.push(entity)
+    else raise EntityError
+    end
   end
 
   def add_order(book, reader)
@@ -37,11 +30,11 @@ class Library
   end
 
   def save_data
-    Data.save(@PATH, @authors, @readers, @orders)
+    Data.save(PATH, @authors, @readers, @orders)
   end
 
   def load_data
-    Data.load(@PATH)
+    Data.load(PATH)
   end
 
   def top_readers(quantity = 1)

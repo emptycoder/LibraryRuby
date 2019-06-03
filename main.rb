@@ -6,20 +6,21 @@ require 'faker'
 library = Library.new
 
 10.times do
-  reader = Reader.new(Faker::Name.name,
-                      Faker::Internet.email,
-                      Faker::Address.city,
-                      Faker::Address.street_name,
-                      Faker::Address.building_number.to_i)
-  library.add_reader(reader)
+  reader = Reader.new(name: Faker::Name.name,
+                      email: Faker::Internet.email,
+                      city: Faker::Address.city,
+                      street: Faker::Address.street_name,
+                      house: Faker::Address.building_number.to_i)
+  library.add(reader)
 
-  author = Author.new(Faker::Book.author,
-                      Faker::Date.birthday.to_s)
-  library.add_author(author)
+  author = Author.new(name: Faker::Book.author,
+                      bio: Faker::Date.birthday.to_s)
+  library.add(author)
 
   10.times do
-    book = Book.new(Faker::Book.title, author)
-    library.add_book(book)
+    book = Book.new(title: Faker::Book.title,
+                    author: author)
+    library.add(book)
   end
 end
 
@@ -32,7 +33,6 @@ library.readers.each do |reader|
 end
 
 library.save_data
-library.PATH = './import.yml'
 library.load_data
 puts 'Top readers:'
 puts library.top_readers.to_s

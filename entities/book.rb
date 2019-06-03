@@ -4,7 +4,7 @@ class Book
   attr_reader :title, :author
   include Errors
 
-  def initialize(title, author)
+  def initialize(title:, author:)
     empty?(title, author)
 
     @title = title

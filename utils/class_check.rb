@@ -2,7 +2,7 @@
 
 # Class that describe entity errors
 class EntityError < StandardError
-  def initialize(message)
-    super
+  def initialize
+    puts "Entity error!"
   end
 end

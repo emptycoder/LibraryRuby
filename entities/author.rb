@@ -4,7 +4,7 @@ class Author
   attr_reader :name, :bio
   include Errors
 
-  def initialize(name, bio)
+  def initialize(name:, bio:)
     empty?(name)
 
     @name = name
